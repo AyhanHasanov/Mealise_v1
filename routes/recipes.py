@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session
 from flask_login import login_required, current_user
-from extensions import db  # Corrected import for db from extensions
-from models.models import Recipe  # Import inside function to avoid circular import
+from extensions import db
+from models.models import Recipe
 from openai import OpenAI
 import os
 from dotenv import load_dotenv
@@ -19,11 +19,11 @@ client = OpenAI(
 @recipes_bp.route('/recipes', methods=['GET'])
 @login_required
 def gen_recipe_page() :
-    if not current_user.is_authenticated :  # Check if the user is authenticated
+    if not current_user.is_authenticated : 
         print("User not logged in, redirecting to login page...")
-        return redirect(url_for('auth.login'))  # This should never happen due to @login_required
+        return redirect(url_for('auth.login')) 
 
-    username = current_user.username  # Use current_user.username instead of session['username']
+    username = current_user.username 
 
     # Import Recipe model here to avoid circular import
     from models.models import Recipe
@@ -107,7 +107,7 @@ $part-instructions
 
     response = client.chat.completions.create(
         model="mistralai/mistral-7b-instruct",
-        temperature=0,  # Makes the output deterministic and consistent
+        temperature=0,
         messages=[
             {"role": "user", "content": prompt}
         ]

@@ -16,7 +16,6 @@ class User(db.Model, UserMixin):  # Inherit from UserMixin for Flask-Login
 
     @property
     def is_active(self):
-        # This can be used to check if the user is active or suspended
         return True
 
     @property

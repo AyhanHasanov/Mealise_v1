@@ -1,12 +1,10 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash, make_response
 from flask_login import login_user, login_required, logout_user, current_user
 from extensions import db, bcrypt
-from models.models import User  # Import the User model
+from models.models import User 
 
-# Create a Blueprint for the authentication routes
 auth_bp = Blueprint('auth', __name__)
 
-# Register Route (for reference)
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -51,22 +49,22 @@ def login() :
         username = request.form.get('username')
         password = request.form.get('password')
 
-        print(f"Login attempt with username: {username}")  # Debug statement
+        #Debug statement to check if username and password are received
+        #print(f"Login attempt with username: {username}")
 
         # Check if the user exists
         user = User.query.filter_by(username=username).first()
 
         if user :
-            print(f"User found: {user.username}")  # Debug statement
+            #Debug statement to check if user is found
+            #print(f"User found: {user.username}")
             if bcrypt.check_password_hash(user.password, password) :
-                print("Password matched!")  # Debug statement
                 # Log the user in
                 login_user(user)
                 flash('Login successful!', 'success')
 
                 # Get the 'next' parameter from the URL (if any)
                 next_page = request.args.get('next')
-                print(f"Next page after login: {next_page}")  # Debugging the next parameter
 
                 # Redirect to the 'next' URL or a default page if 'next' is not set
                 if next_page :
@@ -74,16 +72,15 @@ def login() :
                 else :
                     return redirect(url_for('recipes.gen_recipe_page'))  # Default page
 
-        # Flash a message for failed login
         flash('Invalid credentials, please try again.', 'danger')
-        return redirect(url_for('auth.login'))  # Redirect to the login page if invalid credentials
+        return redirect(url_for('auth.login'))
 
-    return render_template('login.html')  # Render the login form template
+    return render_template('login.html')
 
 @auth_bp.route('/logout')
 @login_required
 def logout():
-    logout_user()  # This logs the user out
+    logout_user()
     flash('You have been logged out.', 'info')
-    return redirect(url_for('auth.login'))  # Redirect to login page after logout
+    return redirect(url_for('auth.login'))
 

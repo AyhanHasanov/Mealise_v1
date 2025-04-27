@@ -19,6 +19,7 @@ def create_app():
     app.secret_key = os.getenv('FLASK_SECRET_KEY')
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
     # Register blueprints
     app.register_blueprint(auth_bp)
     app.register_blueprint(recipes_bp)
@@ -41,12 +42,11 @@ def create_app():
 
     # Dynamically create the database tables if they don't exist
     with app.app_context():
-        db.create_all()  # Ensure that the app context is set
+        db.create_all()
 
     return app
 
 
-
 if __name__ == "__main__":
-    app = create_app()  # Create the app instance
+    app = create_app()
     app.run(debug=True)
