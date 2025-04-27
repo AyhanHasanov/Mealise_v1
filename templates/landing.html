@@ -1,0 +1,24 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8" />-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0" />-->
+<!--  <title>Mealise – Your Smart Recipe Generator</title>-->
+<!--</head>-->
+<!--<body>-->
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero d-flex align-items-center justify-content-center" style="min-height: 80vh;">
+  <div class="hero-content">
+    <h1 class="display-4 mb-4">Welcome to Mealise</h1>
+    <p class="lead mb-4">Your smart assistant for generating delicious recipes based on your preferences and pantry.</p>
+    <a href="{{ url_for('recipes.gen_recipe_page') }}" class="btn btn-primary btn-lg me-2">Generate a Recipe</a>
+    <a href="{{ url_for('spoonacular.unified_discover') }}" class="btn btn-outline-secondary btn-lg">Discover Recipes</a>
+  </div>
+</section>
+{% endblock %}
+
+
+<!--</body>-->
+<!--</html>-->
