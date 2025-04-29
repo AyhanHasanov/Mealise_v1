@@ -11,6 +11,7 @@ Mealise is a Flask-based web application that helps users discover and generate 
 - **Responsive Design**: Mobile-friendly interface with Bootstrap 5
 
 ## Project Structure
+```
 mealise/
 ├── app.py # Main application entry point
 ├── extensions.py # Flask extensions initialization
@@ -39,54 +40,111 @@ mealise/
 │ └── register.html # Registration page
 │
 └── venv/ # Virtual environment
+```
+
+# Mealise - AI Recipe Generator
+
+Mealise is a Flask-based web application that allows users to generate personalized recipes using ingredients they have on hand. It integrates with the Spoonacular API for recipe discovery and uses OpenAI (via OpenRouter) for generating custom recipes.
 
 
-## Technologies Used
+## 1. Tech Stack
+- Python 3.x
+- Flask
+- Jinja2 (for templating)
+- Flask-Login (user session management)
+- Flask-Bcrypt (password hashing)
+- Flask-SQLAlchemy (ORM)
+- SQLite (default database)
+- Bootstrap 5 (frontend styling)
+- Spoonacular API (external recipe search)
+- OpenAI via OpenRouter API (AI recipe generation)
+- dotenv (for environment variable management)
 
-- **Backend**: Python, Flask
-- **Database**: SQLite, Flask-SQLAlchemy
-- **Authentication**: Flask-Login, Flask-Bcrypt
-- **Frontend**: HTML5, CSS3, Bootstrap 5, Jinja2 templating
-- **APIs**: Spoonacular API, OpenRouter AI API
-- **Other**: dotenv for environment variables
+## 2. Project Structure
 
-## Setup Instructions
+ - **venv/**  
+ 	Python virtual environment.
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/mealise.git
-   cd mealise
-Create and activate a virtual environment:
+- **instance/**
+    Stores app-specific settings and the SQLite database (mealise.db).
 
-bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-Install dependencies:
+- **models/**
+    Defines SQLAlchemy models for users and recipes.
 
-bash
-pip install -r requirements.txt
-Create a .env file with your environment variables:
+- **routes/**
+    Contains route handlers:
+        - auth.py: login, logout, register
+        - discover.py: Spoonacular-powered recipe discovery
+        - home.py: landing page
+        - recipes.py: recipe generation and management
 
-FLASK_SECRET_KEY=your_secret_key
-DATABASE_URI=sqlite:///instance/mealise.db
-SPOONACULAR_API_KEY=your_spoonacular_key
-OPENROUTER_API_KEY=your_openrouter_key
-Run the application:
+- **templates/**
+    Jinja2 HTML templates for rendering pages.
+        - base.html: common layout
+        - landing.html, login.html, register.html, discover.html, recipe_page.html
+    templates/partials/
+        - _recipes.html: partial template for recipe cards
 
-bash
-flask run
-API Integration
-Mealise integrates with:
+- **app.py**
+    Main entry point; initializes Flask app, blueprints, database, and login manager.
 
-Spoonacular API for recipe discovery
+- **extensions.py**
+    Initializes extensions like Flask-Bcrypt and SQLAlchemy.
 
-OpenRouter AI API for recipe generation
+- **.env**
+    Environment variables for configuration.
 
-Screenshots
-(Add screenshots of the main pages here if available)
+## 3. How to Set Up the App
 
-License
-This project is licensed under the MIT License - see the LICENSE file for details.
+#### 1. Clone the Repository
+```
+$ git clone <your-repo-url>
+$ cd mealise
+```
+#### 2. Create and Activate a Virtual Environment
+**Linux/macOS:**
+```
+$ python3 -m venv venv
+$ source venv/bin/activate
+```
+**Windows: **
+```
+> python -m venv venv
+> venv\Scripts\activate
+```
+#### 3. Install Required Dependencies
+(Ensure you are in the virtual environment)
+```
+$ pip install -r requirements.txt
+```
+
+#### 4. Set Up Environment Variables
+Create a `.env` file in the root directory with the following content:
+```
+FLASK_SECRET_KEY=your_flask_secret_key  
+DATABASE_URI=sqlite:///instance/mealise.db  
+SPOONACULAR_API_KEY=your_spoonacular_api_key  
+OPENROUTER_API_KEY=your_openrouter_api_key  
+```
+Make sure to replace the placeholders with your **actual keys**
+
+#### 5. Run the Application
+```
+$ python app.py
+```
+Access the app at: http://127.0.0.1:5000/
 
 
-This Markdown file provides a comprehensive overview of your project while keeping it concise and easy to read. You can customize it further by adding screenshots, more detailed setup instruct
+## 4. Features
+
+- User Registration and Authentication
+- Recipe Discovery using Spoonacular API
+- AI-Generated Recipes via OpenRouter/OpenAI
+- Recipe History with Pagination
+- Delete Saved Recipes
+- Responsive UI using Bootstrap
+
+## 5. Notes
+
+- The app uses SQLite by default. You can switch to another DB by changing the `DATABASE_URI` in `.env`.
+- Avoid pushing `.env` or `instance/mealise.db` to public repositories for security reasons.
