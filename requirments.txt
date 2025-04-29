@@ -1,0 +1,7 @@
+Flask
+Flask-Login
+Flask-Bcrypt
+Flask-SQLAlchemy
+python-dotenv
+requests
+openai
