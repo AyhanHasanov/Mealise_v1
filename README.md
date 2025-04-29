@@ -2,15 +2,20 @@
 
 Mealise is a Flask-based web application that helps users discover and generate recipes based on their available ingredients. It combines user-generated content with external recipe APIs to provide a comprehensive cooking experience.
 
-## Features
+## 1. Tech Stack
+- Python 3.x
+- Flask
+- Jinja2 (for templating)
+- Flask-Login (user session management)
+- Flask-Bcrypt (password hashing)
+- Flask-SQLAlchemy (ORM)
+- SQLite (default database)
+- Bootstrap 5 (frontend styling)
+- Spoonacular API (external recipe search)
+- OpenAI via OpenRouter API (AI recipe generation)
+- dotenv (for environment variable management)
 
-- **Recipe Generation**: Create custom recipes using AI based on available ingredients
-- **Recipe Discovery**: Browse recipes from Spoonacular API with advanced filtering
-- **User Authentication**: Secure registration and login system with password hashing
-- **Recipe Management**: Save, view, and delete your generated recipes
-- **Responsive Design**: Mobile-friendly interface with Bootstrap 5
-
-## Project Structure
+## 2. Project Structure
 ```
 mealise/
 ├── app.py # Main application entry point
@@ -41,58 +46,6 @@ mealise/
 │
 └── venv/ # Virtual environment
 ```
-
-# Mealise - AI Recipe Generator
-
-Mealise is a Flask-based web application that allows users to generate personalized recipes using ingredients they have on hand. It integrates with the Spoonacular API for recipe discovery and uses OpenAI (via OpenRouter) for generating custom recipes.
-
-
-## 1. Tech Stack
-- Python 3.x
-- Flask
-- Jinja2 (for templating)
-- Flask-Login (user session management)
-- Flask-Bcrypt (password hashing)
-- Flask-SQLAlchemy (ORM)
-- SQLite (default database)
-- Bootstrap 5 (frontend styling)
-- Spoonacular API (external recipe search)
-- OpenAI via OpenRouter API (AI recipe generation)
-- dotenv (for environment variable management)
-
-## 2. Project Structure
-
- - **venv/**  
- 	Python virtual environment.
-
-- **instance/**
-    Stores app-specific settings and the SQLite database (mealise.db).
-
-- **models/**
-    Defines SQLAlchemy models for users and recipes.
-
-- **routes/**
-    Contains route handlers:
-        - auth.py: login, logout, register
-        - discover.py: Spoonacular-powered recipe discovery
-        - home.py: landing page
-        - recipes.py: recipe generation and management
-
-- **templates/**
-    Jinja2 HTML templates for rendering pages.
-        - base.html: common layout
-        - landing.html, login.html, register.html, discover.html, recipe_page.html
-    templates/partials/
-        - _recipes.html: partial template for recipe cards
-
-- **app.py**
-    Main entry point; initializes Flask app, blueprints, database, and login manager.
-
-- **extensions.py**
-    Initializes extensions like Flask-Bcrypt and SQLAlchemy.
-
-- **.env**
-    Environment variables for configuration.
 
 ## 3. How to Set Up the App
 
@@ -136,13 +89,12 @@ Access the app at: http://127.0.0.1:5000/
 
 
 ## 4. Features
+- **Recipe Generation**: Create custom recipes using AI based on available ingredients
+- **Recipe Discovery**: Browse recipes from Spoonacular API with advanced filtering
+- **User Authentication**: Secure registration and login system with password hashing
+- **Recipe Management**: Save, view, and delete your generated recipes
+- **Responsive Design**: Mobile-friendly interface with Bootstrap 5
 
-- User Registration and Authentication
-- Recipe Discovery using Spoonacular API
-- AI-Generated Recipes via OpenRouter/OpenAI
-- Recipe History with Pagination
-- Delete Saved Recipes
-- Responsive UI using Bootstrap
 
 ## 5. Notes
 
