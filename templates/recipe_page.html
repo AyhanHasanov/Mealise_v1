@@ -9,7 +9,8 @@
     </div>
 
     <h1 class="mb-4">Generate recipe: </h1>
-    <p>Try adding quantity of the ingredients you have for better results!</p>
+    <p>Try adding quantity of the ingredients you have for better results! <span class="text-danger fw-bold">Please note that there might be unexpected results.</span></p>
+
     <!-- Form -->
     <form id="generateForm" method="POST" action="{{ url_for('recipes.generate_and_save_recipe') }}" class="mb-5">
         <div class="mb-3">
