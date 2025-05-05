@@ -56,7 +56,7 @@ mealise/
 #### 2. Install Python 3.13
 If you have Python installed you can check the version by running the following command through CMD or PowerShell
 ```
-python -v
+python -V
 ```
 
 #### 3. Open Command Prompt or PowerShell and navigate to the directory where your unarchived project folder is.
