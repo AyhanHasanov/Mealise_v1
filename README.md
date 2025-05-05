@@ -1,6 +1,6 @@
 # Mealise - Smart Recipe Generator
 
-## [Official Docuemtation available in BG](https://github.com/AyhanHasanov/Mealise_v1/blob/main/%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BD%D0%B0%20%D0%A3%D0%B5%D0%B1%20%D0%9F%D1%80%D0%B8%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5%20Mealise.pdf)
+## [Official Documentation available in BG](https://github.com/AyhanHasanov/Mealise_v1/blob/main/%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%20%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BD%D0%B0%20%D0%A3%D0%B5%D0%B1%20%D0%9F%D1%80%D0%B8%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5%20Mealise.pdf)
 ---
 Mealise is a Flask-based web application that helps users discover and generate recipes based on their available ingredients. It combines user-generated content with external recipe APIs to provide a comprehensive cooking experience.
 
@@ -54,9 +54,14 @@ mealise/
 #### 1. Download the ZIP file of the project and unarchive it in a folder of your desire
 
 #### 2. Install Python 3.13
+If you have Python installed you can check the version by running the following command through CMD or PowerShell
+```
+python -v
+```
 
 #### 3. Open Command Prompt or PowerShell and navigate to the directory where your unarchived project folder is.
 **Make sure you possess administrator rights and run the following:** 
+*If you're using Visual Studio Code, run the commands in the Terminal window*
 ```
 python -m venv venv
 ```
@@ -81,7 +86,9 @@ Make sure to replace the placeholders with your **actual keys**
 ```
 $ python app.py
 ```
-Access the app at: http://127.0.0.1:5000/
+Access the app via any browser at: http://127.0.0.1:5000/ or localhost:5000
+
+> Note that the app runs locally, hence all the setup steps are needed for the app to run as expected.
 
 
 ## 4. Features
