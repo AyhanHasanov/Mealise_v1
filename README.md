@@ -47,25 +47,18 @@ mealise/
 └── venv/ # Virtual environment
 ```
 
-## 3. How to Set Up the App
+## 3. How to Set Up the App on Windows 11
 
-#### 1. Clone the Repository
+#### 1. Download the ZIP file of the project 
+
+#### 2. Install Python 3.13
+
+#### 3. Open command prompt or Power Shell and navigate to the directory where your downloaded and unarchived folder is
 ```
-$ git clone <your-repo-url>
-$ cd mealise
+python -m venv venv
 ```
-#### 2. Create and Activate a Virtual Environment
-**Linux/macOS:**
-```
-$ python3 -m venv venv
-$ source venv/bin/activate
-```
-**Windows: **
-```
-> python -m venv venv
-> venv\Scripts\activate
-```
-#### 3. Install Required Dependencies
+
+#### 4. Install Required Dependencies
 (Ensure you are in the virtual environment)
 ```
 $ pip install -r requirements.txt
