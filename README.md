@@ -49,11 +49,12 @@ mealise/
 
 ## 3. How to Set Up the App on Windows 11
 
-#### 1. Download the ZIP file of the project 
+#### 1. Download the ZIP file of the project and unarchive it in a folder of your desire
 
 #### 2. Install Python 3.13
 
-#### 3. Open command prompt or Power Shell and navigate to the directory where your downloaded and unarchived folder is
+#### 3. Open Command Prompt or PowerShell and navigate to the directory where your unarchived project folder is.
+**Make sure you possess administrator rights and run the following:** 
 ```
 python -m venv venv
 ```
