@@ -1,7 +1,5 @@
 # Mealise - Smart Recipe Generator
 
-## [Official Documentation available in BG](# Mealise - Smart Recipe Generator
-
 ## [Official Documentation available in BG](github.com/AyhanHasanov/Mealise_v1/blob/main/Mealise%20-%20Техническа%20Документация%20на%20Уеб%20Приложение.pdf)
 ---
 Mealise is a Flask-based web application that helps users discover and generate recipes based on their available ingredients. It combines user-generated content with external recipe APIs to provide a comprehensive cooking experience.
