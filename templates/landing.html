@@ -9,9 +9,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<section class="hero d-flex align-items-center justify-content-center" style="min-height: 80vh;">
-  <div class="hero-content">
-    <h1 class="display-4 mb-4">Welcome to Mealise</h1>
+
+<section id="main-lnd" class="hero d-flex align-items-center justify-content-center" style="min-height: 100vh; ">
+  <div class="hero-content border border-5 border-primary-subtle" style="padding: 7vw; background-color: rgb(255,255,255,1); border-radius: 15px;">
+    <h1 class="display-4 mb-4" >Welcome to Mealise</h1>
     <p class="lead mb-4">Your smart assistant for generating delicious recipes based on your preferences and pantry.</p>
     <a href="{{ url_for('recipes.gen_recipe_page') }}" class="btn btn-primary btn-lg me-2">Generate a Recipe</a>
     <a href="{{ url_for('spoonacular.unified_discover') }}" class="btn btn-outline-secondary btn-lg">Discover Recipes</a>

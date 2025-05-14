@@ -37,3 +37,12 @@ class Recipe(db.Model):
     created_at = db.Column(db.DateTime, nullable=False)
     def __repr__(self):
         return f'<Recipe {self.id} for {self.username}>'
+
+class SpoonacularRecipes(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, nullable=False)
+    recipe_id = db.Column(db.Integer, nullable=False)
+
+    __table_args__ = (
+        db.UniqueConstraint('user_id', 'recipe_id', name='unique_user_recipe'),
+    )

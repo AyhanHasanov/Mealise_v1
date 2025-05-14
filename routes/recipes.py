@@ -41,6 +41,9 @@ def generate_and_save_recipe():
         return redirect(url_for('auth.login'))
 
     ingredients = request.form['ingredients']
+    if not ingredients:
+        return redirect(url_for('recipes.gen_recipe_page'))
+
     raw_recipe_text = generate_recipe(ingredients)
     print(raw_recipe_text)
 
@@ -89,6 +92,7 @@ def generate_recipe(ingredients):
 You are a creative chef. Generate a recipe using the following ingredients: {ingredients}
 You don't need to include ALL of the ingredients.
 You can't use ingredients that are not in the list.
+Exclude listed items that aren't food.
 Format your answer exactly like this:
 
 $part-title

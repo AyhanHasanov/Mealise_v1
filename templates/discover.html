@@ -1,11 +1,12 @@
+
 {% extends "base.html" %}
+
 {% block content %}
 <div class="container mt-5">
     <h2 class="mb-4">Discover Recipes</h2>
 
-    <!-- ADVANCED SEARCH FORM -->
+    <!-- Advanced Search Form -->
     <form id="advanced-search-form" method="POST" class="card p-4 mb-5 shadow-sm">
-        <input type="hidden" name="search_mode" value="advanced">
         <h4 class="mb-3">Advanced Search</h4>
         <div class="row g-3">
             <div class="col-md-4">
@@ -38,39 +39,36 @@
             </div>
             <div class="col-md-2 text-end">
                 <button type="submit" class="btn btn-primary">Search</button>
-                <button id="clear-filters" class="btn btn-outline-danger">Clear Filters</button>
+                <button id="clear-filters" type="button" class="btn btn-outline-danger">Clear Filters</button>
             </div>
         </div>
     </form>
 
     <hr class="mb-4">
 
-    <!-- RECIPE RESULTS: One per row -->
-    <div id="recipes-container" class="row g-4">
+    <!-- Recipe Cards -->
+    <div id="recipes-container" class="row row-cols-1 row-cols-md-3 g-4">
         {% for recipe in recipes %}
-        <div class="col-12 recipe-card">
+        <div class="col recipe-card">
             <div class="card h-100 shadow-sm">
-                <div class="row g-0">
-                    {% if recipe.image %}
-                    <div class="col-md-4">
-                        <img src="{{ recipe.image }}" class="img-fluid rounded-start h-100 object-fit-cover" alt="{{ recipe.title }}">
-                    </div>
+                {% if recipe.image %}
+                <img src="{{ recipe.image }}" class="card-img-top" alt="{{ recipe.title }}">
+                {% endif %}
+                    {% if recipe.readyInMinutes %}
+                    <h5 class="badge text-bg-light fw-normal fs-6" style="position:absolute; top:10px; right: 10px;">Ready in: {{ recipe.readyInMinutes }} mins</h5>
                     {% endif %}
-                    <div class="col-md-8">
-                        <div class="card-body d-flex flex-column h-100">
-                            <h5 class="card-title">{{ recipe.title }}</h5>
-                            {% if recipe.readyInMinutes %}
-                            <p class="card-text"><strong>Ready in:</strong> {{ recipe.readyInMinutes }} mins</p>
-                            {% endif %}
-                            {% if recipe.summary %}
-                            <p class="card-text">{{ recipe.summary | safe }}</p>
-                            {% endif %}
-                            <div class="mt-auto">
-                                {% if recipe.sourceUrl %}
-                                <a href="{{ recipe.sourceUrl }}" target="_blank" class="btn btn-outline-primary w-100">View Full Recipe</a>
-                                {% endif %}
-                            </div>
-                        </div>
+                <div class="card-body d-flex flex-column position-relative">
+                    <h5 class="card-title">{{ recipe.title }}</h5>
+                    <div class="mt-auto d-flex gap-2">
+                        {% if recipe.sourceUrl %}
+                        <a href="{{ recipe.sourceUrl }}" target="_blank" class="btn btn-outline-primary w-50">View Recipe</a>
+                        {% endif %}
+                        <button
+                            type="button"
+                            class="btn btn-outline-success w-50 save-btn"
+                            data-recipe-id="{{ recipe.id }}">
+                            Save
+                        </button>
                     </div>
                 </div>
             </div>
@@ -78,7 +76,6 @@
         {% endfor %}
     </div>
 
-    <!-- Load More Button -->
     {% if recipes %}
     <div id="load-more-container" class="text-center my-5">
         <button id="load-more-button" class="btn btn-secondary btn-lg" data-page="{{ current_page + 1 }}">
@@ -88,14 +85,27 @@
     {% endif %}
 </div>
 
+<!-- Toast / Popup -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1055">
+    <div id="popup-toast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body" id="popup-message">
+                Recipe saved successfully!
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
 <script>
-    // Clear Filters Button Functionality
-    document.getElementById("clear-filters").addEventListener("click", function() {
+    // Clear Filters
+    document.getElementById("clear-filters").addEventListener("click", function () {
         window.location.href = "{{ url_for('spoonacular.unified_discover') }}";
     });
 
-    // Load More Recipes (AJAX)
-    document.getElementById("load-more-button").addEventListener("click", function() {
+    // Load More
+    document.getElementById("load-more-button")?.addEventListener("click", function () {
         const button = this;
         const page = button.getAttribute("data-page");
         const query = "{{ query }}";
@@ -108,7 +118,12 @@
         fetch(`{{ url_for('spoonacular.load_more_recipes') }}?page=${page}&query=${query}&cuisine=${cuisine}&diet=${diet}&sort=${sort}`)
             .then(response => response.text())
             .then(data => {
-                document.getElementById("recipes-container").innerHTML += data;
+                const parser = new DOMParser();
+                const html = parser.parseFromString(data, 'text/html');
+                const newRecipes = html.querySelectorAll('.recipe-card');
+                newRecipes.forEach(recipe => {
+                    document.getElementById('recipes-container').appendChild(recipe);
+                });
                 button.setAttribute("data-page", parseInt(page) + 1);
                 button.removeAttribute("disabled");
             })
@@ -116,5 +131,43 @@
                 button.removeAttribute("disabled");
             });
     });
+
+    // Save Recipe AJAX + Toast
+    document.querySelectorAll(".save-btn").forEach(button => {
+        button.addEventListener("click", () => {
+            const recipeId = button.dataset.recipeId;
+
+            fetch("/save_recipe", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: `recipe_id=${recipeId}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                let message = data.message || "Recipe saved successfully!";
+                let isError = !data.success;
+                showToast(message, isError);
+            })
+            .catch(() => {
+                showToast("An error occurred while saving the recipe.", true);
+            });
+        });
+    });
+
+    // Show Toast
+    function showToast(message, isError = false) {
+        const toastEl = document.getElementById("popup-toast");
+        const toastBody = document.getElementById("popup-message");
+        const toast = new bootstrap.Toast(toastEl);
+
+        toastBody.textContent = message;
+
+        toastEl.classList.remove("bg-success", "bg-danger");
+        toastEl.classList.add(isError ? "bg-danger" : "bg-success");
+
+        toast.show();
+    }
 </script>
 {% endblock %}
