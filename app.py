@@ -7,7 +7,7 @@ from models.models import User
 from routes.auth import auth_bp
 from routes.discover import spoonacular_bp
 from routes.home import home_bp
-from routes.recipes import recipes_bp
+from routes.gen_recipe import recipes_bp
 
 
 load_dotenv()

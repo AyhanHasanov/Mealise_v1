@@ -1,4 +1,3 @@
-
 {% extends "base.html" %}
 
 {% block content %}
@@ -133,26 +132,27 @@
     });
 
     // Save Recipe AJAX + Toast
-    document.querySelectorAll(".save-btn").forEach(button => {
-        button.addEventListener("click", () => {
-            const recipeId = button.dataset.recipeId;
+    document.getElementById('recipes-container').addEventListener('click', function(e) {
+        const saveBtn = e.target.closest('.save-btn');
+        if (!saveBtn) return;
 
-            fetch("/save_recipe", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
-                body: `recipe_id=${recipeId}`
-            })
-            .then(response => response.json())
-            .then(data => {
-                let message = data.message || "Recipe saved successfully!";
-                let isError = !data.success;
-                showToast(message, isError);
-            })
-            .catch(() => {
-                showToast("An error occurred while saving the recipe.", true);
-            });
+        const recipeId = saveBtn.dataset.recipeId;
+
+        fetch("/save_recipe", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: `recipe_id=${recipeId}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            let message = data.message || "Recipe saved successfully!";
+            let isError = !data.success;
+            showToast(message, isError);
+        })
+        .catch(() => {
+            showToast("An error occurred while saving the recipe.", true);
         });
     });
 

@@ -20,6 +20,12 @@
                         {% if recipe.sourceUrl %}
                         <a href="{{ recipe.sourceUrl }}" target="_blank" class="btn btn-outline-primary w-100">View Full Recipe</a>
                         {% endif %}
+                        <button
+                            type="button"
+                            class="btn btn-outline-success w-50 save-btn"
+                            data-recipe-id="{{ recipe.id }}">
+                            Save
+                        </button>
                     </div>
                 </div>
             </div>
